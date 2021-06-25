@@ -5,7 +5,8 @@ import Home from './Home';
 import About from './About';
 import Login from './Login';
 import NotFound from './NotFound';
-import AuthenticatedRoute from './AuthenticatedRoute';
+import AuthRoute from './AuthRoute';
+import Unauthorized from './Unauthorized';
 
 const Layout = (props) => {
   return (
@@ -16,8 +17,15 @@ const Layout = (props) => {
           <Switch>
             <Route exact path='/home' component={Home} />
             <Route exact path='/' component={Home} />
-            <AuthenticatedRoute exact path='/about' component={About} />
+            <AuthRoute
+              exact
+              path='/about'
+              role='user'
+              // role={['management', 'finance', 'user']} //  for multiple roles
+              component={About}
+            />
             <Route exact path='/login' component={Login} />
+            <Route exact path='/unauthorized' component={Unauthorized} />
             <Route path='*' component={NotFound} />
           </Switch>
         </div>
