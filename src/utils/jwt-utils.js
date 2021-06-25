@@ -12,8 +12,10 @@ export function isAlive(payload) {
     return true;
   }
 
-  const expiry = new Date(payload.exp);
+  //  exp is a UNIX time stamp
+  //  convert that to number of milliseconds
+  const expiry = new Date(payload.exp * 1000);
   const now = new Date();
 
-  return now <= expiry;
+  return expiry >= now;
 }

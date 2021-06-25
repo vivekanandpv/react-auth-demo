@@ -5,6 +5,7 @@ import Home from './Home';
 import About from './About';
 import Login from './Login';
 import NotFound from './NotFound';
+import AuthenticatedRoute from './AuthenticatedRoute';
 
 const Layout = (props) => {
   return (
@@ -15,7 +16,7 @@ const Layout = (props) => {
           <Switch>
             <Route exact path='/home' component={Home} />
             <Route exact path='/' component={Home} />
-            <Route exact path='/about' component={About} />
+            <AuthenticatedRoute exact path='/about' component={About} />
             <Route exact path='/login' component={Login} />
             <Route path='*' component={NotFound} />
           </Switch>

@@ -22,6 +22,11 @@ export function logout() {
 export function isLoggedIn() {
   //    1. check whether the sessionStorage has the auth
   const authString = sessionStorage.getItem('auth');
+
+  if (!authString) {
+    return false;
+  }
+
   const auth = JSON.parse(authString);
 
   //    2. check whether the auth is alive

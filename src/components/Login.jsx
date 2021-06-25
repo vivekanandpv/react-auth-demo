@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { login } from '../services/auth-service';
+import { useHistory } from 'react-router';
 
 const Login = (props) => {
+  const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checkMeOut, setCheckMeOut] = useState(false);
@@ -33,7 +35,10 @@ const Login = (props) => {
       };
 
       login(formData)
-        .then((v) => console.log('Login Component: Success'))
+        .then((v) => {
+          const returnUrl = props.location?.state?.from?.pathname;
+          history.push(returnUrl); //  programmatic navigation
+        })
         .catch((e) => console.log('Login Component: Failure'));
     }
   };
