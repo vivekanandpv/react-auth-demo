@@ -1,14 +1,18 @@
 import React from 'react';
 import { NavLink, BrowserRouter as Router } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { authSlice } from '../store/auth-slice';
 import { useHistory } from 'react-router';
 
 const Navbar = (props) => {
+  const isLoggedIn = useSelector((state) => state.auth.loggedIn);
   const dispatch = useDispatch();
   const history = useHistory();
   const logout = () => {
     dispatch(authSlice.actions.recordLogout());
+    history.push('/login');
+  };
+  const login = () => {
     history.push('/login');
   };
   return (
@@ -59,11 +63,17 @@ const Navbar = (props) => {
                 </NavLink>
               </li>
             </ul>
-            <div>
-              <button className='btn btn-danger btn-sm' onClick={logout}>
-                Logout
+            {isLoggedIn ? (
+              <div>
+                <button className='btn btn-danger btn-sm' onClick={logout}>
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <button className='btn btn-primary btn-sm' onClick={login}>
+                Login
               </button>
-            </div>
+            )}
           </div>
         </div>
       </nav>
