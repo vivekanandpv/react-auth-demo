@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { login } from '../services/auth-service';
 import { useHistory } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
+import { authSlice } from '../store/auth-slice';
 
 const Login = (props) => {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checkMeOut, setCheckMeOut] = useState(false);
+  const authState = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const emailRegEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
   const passwordRegEx = /.{8,16}/;
@@ -36,6 +40,7 @@ const Login = (props) => {
 
       login(formData)
         .then((v) => {
+          dispatch(authSlice.actions.recordLogin(v));
           const returnUrl = props.location?.state?.from?.pathname;
           history.push(returnUrl); //  programmatic navigation
         })

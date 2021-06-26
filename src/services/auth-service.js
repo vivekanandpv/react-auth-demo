@@ -8,10 +8,7 @@ export function login(credentials) {
     //  decode the token
     const tokenPayload = decode(res.data.token);
 
-    //  store the decoded token in the sessionStorage
-    sessionStorage.setItem('auth', JSON.stringify(tokenPayload));
-
-    return Promise.resolve(true);
+    return Promise.resolve(tokenPayload);
   });
 }
 
@@ -33,14 +30,10 @@ export function isLoggedIn() {
   return isAlive(auth);
 }
 
-export function isInRole(role) {
-  const authString = sessionStorage.getItem('auth');
-
-  if (!authString) {
+export function isInRole(role, auth) {
+  if (!auth) {
     return false;
   }
-
-  const auth = JSON.parse(authString);
 
   if (Array.isArray(auth.Roles)) {
     //  for more than one role, Roles is an array
@@ -51,14 +44,10 @@ export function isInRole(role) {
   }
 }
 
-export function matchesAtLeastOneRole(inputRoles) {
-  const authString = sessionStorage.getItem('auth');
-
-  if (!authString) {
+export function matchesAtLeastOneRole(inputRoles, auth) {
+  if (!auth) {
     return false;
   }
-
-  const auth = JSON.parse(authString);
 
   for (let index = 0; index < auth.Roles.length; index++) {
     const roleIndex = inputRoles.indexOf(auth.Roles[index]);
