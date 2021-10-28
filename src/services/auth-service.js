@@ -6,7 +6,7 @@ export function login(credentials) {
   //  make a post request to the auth server
   return httpClient.post('auth/login', credentials).then((res) => {
     //  decode the token
-    const tokenPayload = decode(res.data.token);
+    const tokenPayload = decode(res.data.jwt);
 
     return Promise.resolve(tokenPayload);
   });

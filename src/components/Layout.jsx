@@ -20,7 +20,7 @@ const Layout = (props) => {
             <AuthRoute
               exact
               path='/about'
-              role='user'
+              role='admin'
               // role={['management', 'finance', 'user']} //  for multiple roles
               component={About}
             />
